@@ -19,11 +19,13 @@ void graphique() {
     text(j * 10, x3 - 7, y4 - j * 30);
   }
   
+  textAlign(CENTER, CENTER);
+  
   // graduations temps
   for (byte k = 0; k <= 100; k++) {
     if (k % 10 == 0) {
       stroke(150);
-      text(k, x3 + 7 + k * 7, y4 + 14);
+      text(k, x3 + k * 7, y4 + 14);
     } else {
       stroke(200);
     }
