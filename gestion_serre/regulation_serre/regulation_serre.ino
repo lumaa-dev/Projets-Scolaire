@@ -4,13 +4,14 @@
 #define Capteur_temperature A4
 #define Capteur_lumiere A3
 #define Chauffage 5
-#define eclairage 6
+#define Eclairage 6
 
 boolean etatBP_marche = false; // température de consigne
 boolean etatBP_arret = false; // régulation
 
 int fader = 0; // potentiomètre pour température
 int temperature = 0; // température à régler dans la serre
+int lux = 0; // lumière
 
 float capt = 0;
 float tension = 0;
@@ -24,7 +25,7 @@ void setup() {
   pinMode(Capteur_temperature,INPUT_PULLUP);  
   pinMode(Capteur_lumiere, INPUT_PULLUP);  
   pinMode(Chauffage, OUTPUT);  
-  pinMode(eclairage, OUTPUT);  
+  pinMode(Eclairage, OUTPUT);  
 }
 
 void loop() {
@@ -32,7 +33,7 @@ void loop() {
     etatBP_marche = digitalRead(BP_marche);
     Serial.println("Régler la température de consigne");
     fader = analogRead(Choix_temperature); // fader 10-1023
-    temperature = map(fader, 10, 1023, 10, 51);
+    temperature = map(fader, 10, 1023, 10, 50);
     Serial.println(temperature);
   } while(etatBP_marche == 1);
   
@@ -41,8 +42,28 @@ void loop() {
     Serial.println("La température est en mode régulation");
     
     capt = analogRead(Capteur_temperature);
-    tension = capt * 5 / 1024 - 0.1;
-    temp = (tension - 0.5) / 0.01;
+    temp = capt / 2 - 65;
     Serial.println(temp);
+
+    //fader = analogRead(Choix_temperature); // fader 10-1023
+    //temperature = map(fader, 10, 1023, 10, 50);
+
+    if (temp < temperature) {
+      digitalWrite(Chauffage, HIGH);
+      Serial.println("Chauffage activé");
+    } else {
+      digitalWrite(Chauffage, LOW);
+      Serial.println("Chauffage désactivé");
+    }
+
+    lux = analogRead(Capteur_lumiere);
+    if (lux < 500) {
+      digitalWrite(Eclairage, HIGH);
+      Serial.println("Eclairage activé");
+    } else {
+      digitalWrite(Eclairage, LOW);
+      Serial.println("Eclairage désactivé");
+    }
+    
   } while(etatBP_arret == 1);
 }
