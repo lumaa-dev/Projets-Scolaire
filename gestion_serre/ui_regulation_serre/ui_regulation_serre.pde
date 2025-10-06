@@ -36,12 +36,12 @@ void setup() {
   font50 = loadFont("Verdana-50.vlw");
   
   printArray(Serial.list());
-  if (Serial.list().length > 1) {
+  if (Serial.list().length > 1) { // si une carte Arduino est branchée
     String NomPort = Serial.list()[1];
     println("Connexion avec " + NomPort);
-    ArduinoSeriePort = new Serial(this, NomPort, 9600);
-  } else {
-    println("Utilisation de données d'exemples");
+    ArduinoSeriePort = new Serial(this,   NomPort, 9600);
+  } else { // sinon utiliser les données exemple
+    println("Utilisation de données d'exemple");
   }
 }
 
@@ -54,8 +54,8 @@ void draw() {
     graphique();
   }
   
-  if (Serial.list().length <= 1) {
-    donnees_serie();
+  if (Serial.list().length <= 1) { // si y a pas de carte Arduino
+    donnees_serie(random(18.9, 26.4)); // insérer des données exemple
   }
 }
 
@@ -63,6 +63,7 @@ void serialEvent(Serial ArduinoSeriePort) {
   String SerialDataStr = ArduinoSeriePort.readStringUntil('\n');
   if (SerialDataStr != null) {
     temp = float(SerialDataStr);
+    donnees_serie(temp); // insérer temp dans le tableau tempHistory
     NouvelleMesure = true;
   }
 }

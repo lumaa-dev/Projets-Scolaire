@@ -31,38 +31,41 @@ void setup() {
 void loop() {
   do {
     etatBP_marche = digitalRead(BP_marche);
-    Serial.println("Régler la température de consigne");
+    // Serial.println("Régler la température de consigne");
     fader = analogRead(Choix_temperature); // fader 10-1023
     temperature = map(fader, 10, 1023, 10, 50);
-    Serial.println(temperature);
+    // Serial.println(temperature);
   } while(etatBP_marche == 1);
   
   do {
     etatBP_arret = digitalRead(BP_arret);
-    Serial.println("La température est en mode régulation");
+    // Serial.println("La température est en mode régulation");
     
     capt = analogRead(Capteur_temperature);
     temp = capt / 2 - 65;
-    Serial.println(temp);
+    // Serial.println(temp);
 
-    //fader = analogRead(Choix_temperature); // fader 10-1023
-    //temperature = map(fader, 10, 1023, 10, 50);
+    // fader = analogRead(Choix_temperature); // fader 10-1023
+    // temperature = map(fader, 10, 1023, 10, 50);
+
+    Serial.print(temp);
+    Serial.write("\n");
 
     if (temp < temperature) {
       digitalWrite(Chauffage, HIGH);
-      Serial.println("Chauffage activé");
+      // Serial.println("Chauffage activé");
     } else {
       digitalWrite(Chauffage, LOW);
-      Serial.println("Chauffage désactivé");
+      // Serial.println("Chauffage désactivé");
     }
 
     lux = analogRead(Capteur_lumiere);
     if (lux < 500) {
       digitalWrite(Eclairage, HIGH);
-      Serial.println("Eclairage activé");
+      // Serial.println("Eclairage activé");
     } else {
       digitalWrite(Eclairage, LOW);
-      Serial.println("Eclairage désactivé");
+      // Serial.println("Eclairage désactivé");
     }
     
   } while(etatBP_arret == 1);
