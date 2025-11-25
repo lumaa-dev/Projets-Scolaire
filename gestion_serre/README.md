@@ -9,7 +9,7 @@ Ceci est un mini-projet réalisé sur quelques semaines, pour prendre la main av
 > Afin d'augmenter la productivité au début du printemps, on souhaite aussi réguler la lumière à l'intérieur de la serre. Un éclairage artificiel sera donc mis en fonctionnement si l'intensité lumineuse extérieure devient inférieure à 500 lux (+/- 50 lux). La mise en route ou l'arrêt du système de gestion de la serre doit se faire à partir de l'appui sur deux boutons poussoirs.
 
 ## Câblage
-![Câblage](./comp.png)
+Le schéma de câble n'étant pas disponible, vous devrez le reproduire à l'aide du [programme](#programmes).
 
 ## Programmes
 Dans [`regulation_serre.ino`](./regulation_serre/regulation_serre.ino), il y a toute la logique pour la gestion de la serre.
